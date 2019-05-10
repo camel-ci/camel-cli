@@ -15,7 +15,7 @@
   "scripts": {
     "test": "jest src/",
     "test:changed": "cross-env npm test -- -o",
-    "pretty": "prettier --write src/**/*.js",
+    "pretty": "prettier --write src/**/*.js templates/**/*.yml",
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint --fix src/**/*.js",
     "lint:staged": "lint-staged"
@@ -30,6 +30,10 @@
       "prettier --write",
       "eslint --fix",
       "cross-env npm test -- --findRelatedTests --passWithNoTests",
+      "git add"
+    ],
+    "templates/**/*.yml": [
+      "prettier --write",
       "git add"
     ]
   },
