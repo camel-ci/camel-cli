@@ -17,7 +17,7 @@ You’ll need to have Node.js 9.0.0 or later and npm on your local development m
 #### `Step 1` - Clone the repository
 
 ```bash
-git clone https://github.com/camel-ci/camel-cli
+git clone git@github.com:camel-ci/camel-cli.git
 ```
 
 #### `Step 2` - Move inside the repository
@@ -32,7 +32,7 @@ cd camel-cli
 npm install
 ```
 
-#### Link the CLI locally
+#### `Step 4` - Link the CLI locally
 
 ```bash
 npm link
