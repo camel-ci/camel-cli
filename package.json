@@ -1,0 +1,52 @@
+{
+  "name": "camel-cli",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CLI tool to use the Camel CI/CD environment.",
+  "author": "Camel CI",
+  "license": "MIT",
+  "main": "src/cli.js",
+  "engines": {
+    "node": ">=9.0.0"
+  },
+  "bin": {
+    "camel": "bin/camel.js"
+  },
+  "scripts": {
+    "test": "jest src/",
+    "test:changed": "cross-env npm test -- -o",
+    "pretty": "prettier --write src/**/*.js",
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "eslint --fix src/**/*.js",
+    "lint:staged": "lint-staged"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "prettier --write",
+      "eslint --fix",
+      "cross-env npm test -- --findRelatedTests --passWithNoTests",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-node": "^9.0.1",
+    "husky": "^2.2.0",
+    "jest": "^24.8.0",
+    "lint-staged": "^8.1.6",
+    "prettier": "^1.17.0"
+  },
+  "dependencies": {
+    "commander": "^2.20.0",
+    "inquirer": "^6.3.1",
+    "js-yaml": "^3.13.1",
+    "lodash": "^4.17.11"
+  }
+}

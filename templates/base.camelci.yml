@@ -1,0 +1,14 @@
+before:
+  - echo 'This runs before the pipeline'
+
+after:
+  - echo 'This runs after the pipeline'
+
+build:
+  - echo 'Building steps here'
+
+test:
+  - echo 'Testing steps here'
+
+deploy:
+  - echo 'Deploy steps here'

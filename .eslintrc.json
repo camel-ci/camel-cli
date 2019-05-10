@@ -1,0 +1,14 @@
+{
+  "extends": ["eslint:recommended", "plugin:node/recommended", "prettier"],
+  "rules": {
+    "prefer-const": "warn",
+    "no-new-object": "error",
+    "no-var": "error",
+    "no-console": "off",
+    "newline-per-chained-call": ["warn", { "ignoreChainWithDepth": 2 }]
+  },
+  "env": {
+    "node": true,
+    "es6": true
+  }
+}
