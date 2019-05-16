@@ -1,6 +1,6 @@
 'use strict';
 
-const { CONFIG_FILE_NAME, isValidTemplate, createConfig, hasConfig } = require('./config');
+const { CONFIG_FILE_NAME, isValidTemplate, createConfig, hasConfig, loadConfig } = require('./config');
 const { print } = require('./util');
 
 const cli = require('commander');
@@ -41,6 +41,9 @@ cli
   .option('-r, --report', 'add a report of this operation to the ci-reports directory')
   .action(options => {
     print('Starting the process to run a full pipeline based on your configuration...');
+    const config = loadConfig();
+    print(JSON.stringify(config));
+
     // Run build/test/deploy based on the config file
 
     // Generate a report of the build and output it visually

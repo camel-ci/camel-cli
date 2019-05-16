@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const yaml = require('js-yaml');
 
 const CONFIG_FILE_NAME = '.camelci.yml';
 const TEMPLATES_DIR_NAME = 'templates';
@@ -23,8 +24,8 @@ const createConfig = (templateName, onCreation) => {
   });
 };
 
-const parseConfig = () => {
-  // Parse local config and return the corresponding config object
+const loadConfig = () => {
+  return yaml.safeLoad(fs.readFileSync(getConfigPath()));
 };
 
-module.exports = { CONFIG_FILE_NAME, isValidTemplate, hasConfig, createConfig, parseConfig };
+module.exports = { CONFIG_FILE_NAME, isValidTemplate, hasConfig, createConfig, loadConfig };
