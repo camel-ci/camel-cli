@@ -19,10 +19,9 @@ cli
       const templateName = template || 'base';
 
       if (!isValidTemplate(templateName)) {
-        print(`
+        return print(`
           Unknown template name '${templateName}' was given to use for the configuration. 
           Please provide a valid template name (eg. 'maven') or use the base template.`);
-        return;
       }
 
       createConfig(templateName, () => {
@@ -40,6 +39,12 @@ cli
   .description('run a full CI/CD pipeline as defined in your config file')
   .option('-r, --report', 'add a report of this operation to the ci-reports directory')
   .action(options => {
+    if (!hasConfig()) {
+      return print(`
+        Missing ${CONFIG_FILE_NAME} config file in the current project.
+        Please make sure you are in the correct directory and have a config ready.`);
+    }
+
     print('Starting the process to run a full pipeline based on your configuration...');
     const config = loadConfig();
     print(JSON.stringify(config));
