@@ -10,7 +10,13 @@ _Built for a Computer Engineering school project. Not to use in production._
 
 #### Node.js and npm
 
-You’ll need to have Node.js 9.0.0 or later and npm on your local development machine. You can download Node.js [here](https://nodejs.org/en/download/) (npm comes with it).
+You'll need to have Node.js 9.0.0 or later and npm on your machine. You can download Node.js [here](https://nodejs.org/en/download/) (npm comes with it).
+
+#### GitLab Runner
+
+You'll also need to have a GitLab Runner available on your machine. You can download a GitLab Runner binary [here](https://docs.gitlab.com/runner/install/index.html).
+
+For the purpose of this tool, you only need to add it to your PATH with the name `gitlab-runner.exe`, no need to register it or install it as a service.
 
 ### Installation
 

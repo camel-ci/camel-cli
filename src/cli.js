@@ -1,11 +1,12 @@
 'use strict';
 
-const { CONFIG_FILE_NAME, isValidTemplate, createConfig, hasConfig, loadConfig } = require('./config');
 const { print } = require('./util');
+const { CONFIG_FILE_NAME, isValidTemplate, createConfig, hasConfig, loadConfig } = require('./config');
+const { run } = require('./build');
 
 const cli = require('commander');
 
-cli.version('0.1.0');
+cli.version('0.2.0');
 
 cli
   .command('init [template]')
@@ -36,7 +37,9 @@ cli
 
 cli
   .command('run')
-  .description('run a full CI/CD pipeline as defined in your config file')
+  .description('run a CI/CD pipeline as defined in your config file')
+  .option('-t, --test', 'include testing steps to the run')
+  .option('-d, --deploy', 'include deploy steps to the run')
   .option('-r, --report', 'add a report of this operation to the ci-reports directory')
   .action(options => {
     if (!hasConfig()) {
@@ -45,17 +48,18 @@ cli
         Please make sure you are in the correct directory and have a config ready.`);
     }
 
-    print('Starting the process to run a full pipeline based on your configuration...');
+    print('Starting a run job based on your configuration...');
     const config = loadConfig();
-    print(JSON.stringify(config));
 
-    // Run build/test/deploy based on the config file
+    run(config, options, output => {
+      print(`
+        Run Output: 
+        ${output}`);
 
-    // Generate a report of the build and output it visually
-
-    if (options.withReport) {
-      // Add the report in a new file of the local reports folder
-    }
+      if (options.report) {
+        // Write output to a new file of the local reports folder
+      }
+    });
   });
 
 cli
