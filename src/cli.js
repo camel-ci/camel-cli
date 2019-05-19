@@ -1,7 +1,8 @@
 'use strict';
 
-const { print } = require('./util');
+const { print, cleanString } = require('./util');
 const { CONFIG_FILE_NAME, isValidTemplate, createConfig, hasConfig, loadConfig } = require('./config');
+const { REPORTS_DIR_NAME, addReport } = require('./report');
 const { run } = require('./build');
 
 const cli = require('commander');
@@ -40,7 +41,7 @@ cli
   .description('run a CI/CD pipeline as defined in your config file')
   .option('-t, --test', 'include testing steps to the run')
   .option('-d, --deploy', 'include deploy steps to the run')
-  .option('-r, --report', 'add a report of this operation to the ci-reports directory')
+  .option('-r, --report', `add a report of this operation to the ${REPORTS_DIR_NAME} directory`)
   .action(options => {
     if (!hasConfig()) {
       return print(`
@@ -57,7 +58,10 @@ cli
         ${output}`);
 
       if (options.report) {
-        // Write output to a new file of the local reports folder
+        const cleanOutput = cleanString(output);
+        addReport(cleanOutput, reportPath => {
+          print(`A report of this run was created at ${reportPath}`);
+        });
       }
     });
   });
