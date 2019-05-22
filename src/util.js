@@ -12,4 +12,15 @@ const buildDateTimeString = date => {
   return dateString + '-' + timeString;
 };
 
-module.exports = { print, cleanString, buildDateTimeString };
+const elapsedTime = (now, pastDate) => {
+  let delta = Math.abs((now - pastDate) / 1000);
+  const days = Math.floor(delta / 86400);
+  delta -= days * 86400;
+  const hours = Math.floor(delta / 3600) % 24;
+  delta -= hours * 3600;
+  const minutes = Math.floor(delta / 60) % 60;
+  delta -= minutes * 60;
+  return days + ' days ' + hours + ' hours ' + minutes + ' minutes';
+};
+
+module.exports = { print, cleanString, buildDateTimeString, elapsedTime };

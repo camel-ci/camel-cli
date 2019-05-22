@@ -2,7 +2,7 @@
 
 const { print, cleanString } = require('./util');
 const { CONFIG_FILE_NAME, isValidTemplate, createConfig, hasConfig, loadConfig } = require('./config');
-const { REPORTS_DIR_NAME, addReport } = require('./report');
+const { REPORTS_DIR_NAME, addReport, hasReport, printReport } = require('./report');
 const { run } = require('./build');
 
 const cli = require('commander');
@@ -70,10 +70,14 @@ cli
   .command('status')
   .description('retrieve a status overview of past builds and reports')
   .action(() => {
-    print('Current Status...');
-    // Read from the ci-reports folder
-    // Output a summary of all builds with main stats
-    // Show a visual report of the last pipeline run
+    print('Current Status... \n');
+    if (!hasReport()) {
+      return print(`
+        Missing ${REPORTS_DIR_NAME} directory in the current project.
+        Please make sure you have already created at least one report for the current project.`);
+    }
+
+    printReport();
   });
 
 cli.parse(process.argv);
