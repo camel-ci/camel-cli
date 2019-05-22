@@ -4,8 +4,7 @@ const trimMultiLine = string => string.replace(/^[^\S\r\n]+|[^\S\r\n]+$/gm, '');
 
 const print = string => console.log(trimMultiLine(string));
 
-// TODO: actually implement this function to get rid of special characters in command output strings
-const cleanString = string => string;
+const cleanString = string => string.replace(/\x1B(.*?)m/g, '').replace(/\x1B(.*?)K/g, '');
 
 const buildDateTimeString = date => {
   const dateString = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();

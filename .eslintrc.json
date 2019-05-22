@@ -5,6 +5,7 @@
     "no-new-object": "error",
     "no-var": "error",
     "no-console": "off",
+    "no-control-regex": "off",
     "newline-per-chained-call": ["warn", { "ignoreChainWithDepth": 2 }]
   },
   "env": {

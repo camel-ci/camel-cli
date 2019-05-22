@@ -9,8 +9,9 @@ const { print } = require('./util');
 const GITLAB_FILE_NAME = '.gitlab-ci.yml';
 
 const makeGitlabConfig = config => {
+  const gitlabScript = _.compact(_.concat(config.before, config.build, config.test, config.deploy, config.after));
   const gitlabConfig = {
-    run: { script: _.compact(_.concat(config.before, config.build, config.test, config.deploy, config.after)) },
+    run: { script: _.map(gitlabScript, command => 'call ' + command) },
   };
   return gitlabConfig;
 };
@@ -32,12 +33,14 @@ const run = (config, options, afterRun) => {
   const gitlabConfigString = yaml.safeDump(makeGitlabConfig(configToUse));
   fs.writeFileSync(GITLAB_FILE_NAME, gitlabConfigString);
 
-  exec('gitlab-runner exec shell run', (error, output) => {
+  exec('gitlab-runner exec shell run', (error, stdout, stderr) => {
     if (error) {
-      return print('Error when starting the runner: ' + error);
+      print('Error when using gitlab runner: ' + error);
+      print('stdout: ' + stdout);
+      print('stderr: ' + stderr);
+    } else {
+      afterRun(stdout);
     }
-
-    afterRun(output);
     cleanAfterRun();
   });
 };
