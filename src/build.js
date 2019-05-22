@@ -9,8 +9,9 @@ const { print } = require('./util');
 const GITLAB_FILE_NAME = '.gitlab-ci.yml';
 
 const makeGitlabConfig = config => {
+  const gitlabScript = _.compact(_.concat(config.before, config.build, config.test, config.deploy, config.after));
   const gitlabConfig = {
-    run: { script: _.compact(_.concat(config.before, config.build, config.test, config.deploy, config.after)) },
+    run: { script: _.map(gitlabScript, command => 'call ' + command) },
   };
   return gitlabConfig;
 };
