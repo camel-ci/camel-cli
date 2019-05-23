@@ -3,8 +3,7 @@
 const _ = require('lodash');
 const fs = require('fs-extra');
 const yaml = require('js-yaml');
-const { exec } = require('child_process');
-const { print } = require('./util');
+const { spawn } = require('child_process');
 
 const GITLAB_FILE_NAME = '.gitlab-ci.yml';
 
@@ -33,15 +32,21 @@ const run = (config, options, afterRun) => {
   const gitlabConfigString = yaml.safeDump(makeGitlabConfig(configToUse));
   fs.writeFileSync(GITLAB_FILE_NAME, gitlabConfigString);
 
-  exec('gitlab-runner exec shell run', (error, stdout, stderr) => {
-    let output = '';
-    if (error) {
-      print('Error when using gitlab runner: ' + error);
-      output = `Status: Job failed \n\nstdout: ${stdout} \nstderr: ${stderr}`;
-    } else {
-      output = `Status: Job succeeded \n\n${stdout}`;
-    }
-    afterRun(output);
+  let output = '';
+  const runnerChild = spawn('gitlab-runner', ['exec', 'shell', 'run']);
+  runnerChild.stdout.setEncoding('utf8');
+
+  const onOutput = data => {
+    const strOutput = data.toString();
+    process.stdout.write(strOutput);
+    output += strOutput;
+  };
+  runnerChild.stdout.on('data', onOutput);
+  runnerChild.stderr.on('data', onOutput);
+
+  runnerChild.on('close', code => {
+    const resultMessage = code !== 0 ? 'failed' : 'succeeded';
+    afterRun(`Status: Job ${resultMessage} \n\nRun output: ${output}`);
     cleanAfterRun();
   });
 };

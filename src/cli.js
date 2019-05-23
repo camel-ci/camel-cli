@@ -59,10 +59,6 @@ cli
     }
 
     run(config, options, output => {
-      print(`
-        Run Output: 
-        ${output}`);
-
       if (options.report) {
         const cleanOutput = cleanString(output);
         addReport(cleanOutput, reportPath => {
