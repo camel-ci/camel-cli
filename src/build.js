@@ -33,19 +33,18 @@ const run = (config, options, afterRun) => {
   fs.writeFileSync(GITLAB_FILE_NAME, gitlabConfigString);
 
   let output = '';
-  const runnerChild = spawn('gitlab-runner', ['exec', 'shell', 'run']);
-  runnerChild.stdout.setEncoding('utf8');
+  const runnerProcess = spawn('gitlab-runner', ['exec', 'shell', 'run']);
 
-  const onOutput = data => {
-    const strOutput = data.toString();
-    process.stdout.write(strOutput);
-    output += strOutput;
+  const onData = data => {
+    const partialOutput = data.toString();
+    process.stdout.write(partialOutput);
+    output += partialOutput;
   };
-  runnerChild.stdout.on('data', onOutput);
-  runnerChild.stderr.on('data', onOutput);
+  runnerProcess.stdout.on('data', onData);
+  runnerProcess.stderr.on('data', onData);
 
-  runnerChild.on('close', code => {
-    const resultMessage = code !== 0 ? 'failed' : 'succeeded';
+  runnerProcess.on('close', returnCode => {
+    const resultMessage = returnCode === 0 ? 'succeeded' : 'succeeded';
     afterRun(`Status: Job ${resultMessage} \n\nRun output: \n${output}`);
     cleanAfterRun();
   });
