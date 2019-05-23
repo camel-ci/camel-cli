@@ -6,7 +6,7 @@ const yaml = require('js-yaml');
 
 const CONFIG_FILE_NAME = '.camelci.yml';
 const TEMPLATES_DIR_NAME = 'templates';
-const TEMPLATES = ['base'];
+const TEMPLATES = ['base', 'maven', 'gradle', 'ant', 'scala', 'ruby', 'python'];
 
 const getConfigPath = () => path.join(process.cwd(), CONFIG_FILE_NAME);
 
