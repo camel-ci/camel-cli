@@ -3,6 +3,7 @@
 const { print, cleanString } = require('./util');
 const { CONFIG_FILE_NAME, isValidTemplate, createConfig, hasConfig, loadConfig, checkConfig } = require('./config');
 const { REPORTS_DIR_NAME, addReport, hasReport, printReport } = require('./report');
+const { setupHook } = require('./hook');
 const { run } = require('./build');
 
 const cli = require('commander');
@@ -83,6 +84,17 @@ cli
     }
 
     printReport();
+  });
+
+cli
+  .command('setup')
+  .description('setup a git hook to trigger a pipeline before after every push')
+  .action(() => {
+    const hookCommand = 'camel run --test --report';
+    setupHook(hookCommand);
+    print(`
+      Sucessfully installed pre-push git hook on the local git repo.
+      The following command will be run: ${hookCommand}`);
   });
 
 cli.parse(process.argv);
