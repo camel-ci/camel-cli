@@ -1,14 +1,24 @@
 before:
-  - echo 'This runs before the pipeline'
+  # Place commands to run before the pipeline here if needed (eg: fetching dependencies)
+  - echo 'Command before the pipeline 1'
+  - echo 'Command before the pipeline 2'
 
 after:
-  - echo 'This runs after the pipeline'
+  # Place commands to run after the pipeline here if needed (eg: cleaning up)
+  - echo 'Command after the pipeline 1'
+  - echo 'Command after the pipeline 2'
 
 build:
-  - echo 'Building steps here'
+  # Place commands to build the whole project here (eg: compiling, packaging...)
+  - echo 'Building step 1'
+  - echo 'Building step 2'
 
 test:
-  - echo 'Testing steps here'
+  # Place commands to run all tests here (eg: unit tests, e2e tests...)
+  - echo 'Testing step 1'
+  - echo 'Testing step 2'
 
 deploy:
-  - echo 'Deploy steps here'
+  # Place commands to deploy your project here (eg: restarting the server with the new built code)
+  - echo 'Deploy step 1'
+  - echo 'Deploy step 2'

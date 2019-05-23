@@ -1,6 +1,9 @@
 before:
   - gem install bundler
 
+after:
+  # Place commands to run after the pipeline here if needed (eg: cleaning up)
+
 build:
   - bundle install
   - rake app:update:bin
@@ -9,3 +12,6 @@ test:
   - rails db:migrate RAILS_ENV=test
   - bundle update
   - rails test
+
+deploy:
+  # Place commands to deploy your project here (eg: restarting the server with the new built code)

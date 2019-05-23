@@ -1,5 +1,14 @@
+before:
+  # Place commands to run before the pipeline here if needed (eg: fetching dependencies)
+
+after:
+  # Place commands to run after the pipeline here if needed (eg: cleaning up)
+
 build:
   - ant clean build
 
 test:
   - ant test
+
+deploy:
+  # Place commands to deploy your project here (eg: restarting the server with the new built code)
