@@ -1,0 +1,11 @@
+before:
+  - gem install bundler
+
+build:
+  - bundle install
+  - rake app:update:bin
+
+test:
+  - rails db:migrate RAILS_ENV=test
+  - bundle update
+  - rails test
