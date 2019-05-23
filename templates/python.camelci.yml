@@ -1,0 +1,5 @@
+build:
+  - pip install .
+
+test:
+  - python -m package_name.test_script # To update with your package/script names
