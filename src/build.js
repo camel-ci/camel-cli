@@ -46,7 +46,7 @@ const run = (config, options, afterRun) => {
 
   runnerChild.on('close', code => {
     const resultMessage = code !== 0 ? 'failed' : 'succeeded';
-    afterRun(`Status: Job ${resultMessage} \n\nRun output: ${output}`);
+    afterRun(`Status: Job ${resultMessage} \n\nRun output: \n${output}`);
     cleanAfterRun();
   });
 };
