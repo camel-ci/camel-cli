@@ -34,13 +34,14 @@ const run = (config, options, afterRun) => {
   fs.writeFileSync(GITLAB_FILE_NAME, gitlabConfigString);
 
   exec('gitlab-runner exec shell run', (error, stdout, stderr) => {
+    let output = '';
     if (error) {
       print('Error when using gitlab runner: ' + error);
-      print('stdout: ' + stdout);
-      print('stderr: ' + stderr);
+      output = `Status: Job failed \n\nstdout: ${stdout} \nstderr: ${stderr}`;
     } else {
-      afterRun(stdout);
+      output = `Status: Job succeeded \n\n${stdout}`;
     }
+    afterRun(output);
     cleanAfterRun();
   });
 };

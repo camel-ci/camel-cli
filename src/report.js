@@ -11,11 +11,13 @@ const addReport = (content, onCreation) => {
     fs.mkdirSync(REPORTS_DIR_NAME);
   }
 
-  const currentDateTimeString = buildDateTimeString(new Date());
+  const now = new Date();
+  const currentDateTimeString = buildDateTimeString(now);
   const reportName = `build-${currentDateTimeString}.txt`;
+  const fullContent = `Creation date: ${now} \n` + content;
 
   const reportFilePath = path.join(REPORTS_DIR_NAME, reportName);
-  fs.writeFile(reportFilePath, content, error => {
+  fs.writeFile(reportFilePath, fullContent, error => {
     if (error) throw error;
     onCreation(reportFilePath);
   });
