@@ -1,7 +1,7 @@
 'use strict';
 
 const { print, cleanString } = require('./util');
-const { CONFIG_FILE_NAME, isValidTemplate, createConfig, hasConfig, loadConfig } = require('./config');
+const { CONFIG_FILE_NAME, isValidTemplate, createConfig, hasConfig, loadConfig, checkConfig } = require('./config');
 const { REPORTS_DIR_NAME, addReport, hasReport, printReport } = require('./report');
 const { run } = require('./build');
 
@@ -51,6 +51,11 @@ cli
 
     print('Starting a run job based on your configuration...');
     const config = loadConfig();
+
+    if (!checkConfig(config)) {
+      return print(`
+        ${CONFIG_FILE_NAME} has invalid properties or missing mandatory properties.`);
+    }
 
     run(config, options, output => {
       print(`

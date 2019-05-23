@@ -28,4 +28,21 @@ const loadConfig = () => {
   return yaml.safeLoad(fs.readFileSync(getConfigPath()));
 };
 
-module.exports = { CONFIG_FILE_NAME, isValidTemplate, hasConfig, createConfig, loadConfig };
+const checkConfig = config => {
+  const exepectedPropertiesArray = ['before', 'after', 'build', 'test', 'deploy'];
+  const givenPropertiesArray = [];
+  let result = true;
+  for (const key in config) {
+    if (!exepectedPropertiesArray.includes(key)) {
+      result = false;
+      break;
+    }
+    givenPropertiesArray.push(key);
+  }
+  if (!givenPropertiesArray.includes('build')) {
+    result = false;
+  }
+  return result;
+};
+
+module.exports = { CONFIG_FILE_NAME, isValidTemplate, hasConfig, createConfig, loadConfig, checkConfig };
